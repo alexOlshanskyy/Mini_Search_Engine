@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, {Component} from 'react';
+
+
+interface AppState {
+
+}
+class App extends Component<{}, AppState> {
+
+  constructor(props: any) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+        <div>
+          <p><b>My search engine</b></p>
+          <button onClick={this.search.bind(this)}>Search</button>
+        </div>
+    );
+  }
+
+  async search() {
+      let res = await fetch("http://localhost:4567/getPath/t/t");
+      if (!res.ok) {
+        alert("Unable to find path");
+        return;
+      }
+      let response = await res.json();
+      console.log(response);
+  }
 }
 
 export default App;

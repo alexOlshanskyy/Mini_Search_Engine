@@ -6,7 +6,5 @@ public class SearchEngine {
         return null;
     }
 
-    private void index () {
 
-    }
 }

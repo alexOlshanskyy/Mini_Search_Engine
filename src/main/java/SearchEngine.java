@@ -2,12 +2,14 @@ import java.util.*;
 
 public class SearchEngine {
 
+    public static final Integer SCALE_CONST = 99999;
+
     public String search (String query) {
         if (!Indexer.isReady()) {
             return null;
         }
         String[] words = getWords(query);
-        ArrayList<SearchResult> searchResults = scoreResults(words);
+        ArrayList<SearchResult> searchResults = scoreResults(words, cleanQuery(query));
         Collections.sort(searchResults);
         return generateString(searchResults);
 
@@ -19,8 +21,14 @@ public class SearchEngine {
         return query.split(" ");
     }
 
+    private String cleanQuery(String query) {
+        query = query.toLowerCase();
+        query = StringCleaner.cleanUpText(query);
+        return query;
+    }
 
-    private ArrayList<SearchResult> scoreResults (String[] words) {
+
+    private ArrayList<SearchResult> scoreResults (String[] words, String query) {
         Indexer.IndexData indexData = Indexer.getIndexData();
         HashMap<String, SearchResult> result = new HashMap<>();
         Set<String> websites = indexData.getUrlToWordCount().keySet();
@@ -48,6 +56,13 @@ public class SearchEngine {
             if (wordMissingForWebsite) {
                 result.remove(website);
                 wordMissingForWebsite = false;
+            }
+        }
+        for (String website : websites) {
+            if (indexData.getUrlToPlain().get(website).contains(query)) {
+                result.put(website,
+                        new SearchResult(website,
+                                result.get(website).score + SCALE_CONST));
             }
         }
         return new ArrayList<>(result.values());

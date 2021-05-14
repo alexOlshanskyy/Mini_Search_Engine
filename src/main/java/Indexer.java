@@ -22,11 +22,13 @@ public class Indexer {
     public static void index() {
         HashMap<String, HashSet<String>> wordToListOfURLsLocal = new HashMap<>();
         HashMap<String, HashMap<String,Integer>> urlToWordCountLocal = new HashMap<>();
+        HashMap<String, String> urlToPlainLocal = new HashMap<>();
         ArrayList<String> domains = FileParser.getDomains();
         for (String domain : domains) {
             System.out.println(domain);
             HashMap<String, String> map = WebCrawler.crawlURL(domain);
             for (String url: map.keySet()) {
+                urlToPlainLocal.put(url, map.get(url));
                 HashMap<String, Integer> wordCount = parseWords(map.get(url));
                 urlToWordCountLocal.put(url, wordCount);
                 for (String word: wordCount.keySet()) {
@@ -43,6 +45,7 @@ public class Indexer {
         }
         indexData.setWordToListOfURLs(wordToListOfURLsLocal);
         indexData.setUrlToWordCount(urlToWordCountLocal);
+        indexData.setUrlToPlain(urlToPlainLocal);
         isReady = true;
     }
 
@@ -74,6 +77,15 @@ public class Indexer {
     public static class IndexData {
         private  HashMap<String, HashSet<String>> wordToListOfURLs = new HashMap<>();
         private  HashMap<String, HashMap<String,Integer>> urlToWordCount = new HashMap<>();
+        private  HashMap<String, String> urlToPlain = new HashMap<>();
+
+        public void setUrlToPlain(HashMap<String, String> urlToPlain) {
+            this.urlToPlain = urlToPlain;
+        }
+
+        public HashMap<String, String> getUrlToPlain() {
+            return urlToPlain;
+        }
 
         public  HashMap<String, HashMap<String, Integer>> getUrlToWordCount() {
             return urlToWordCount;

@@ -28,7 +28,7 @@ public class Indexer {
             System.out.println(domain);
             HashMap<String, String> map = WebCrawler.crawlURL(domain);
             for (String url: map.keySet()) {
-                urlToPlainLocal.put(url, map.get(url));
+                urlToPlainLocal.put(url, StringCleaner.cleanUpText(map.get(url)).toLowerCase());
                 HashMap<String, Integer> wordCount = parseWords(map.get(url));
                 urlToWordCountLocal.put(url, wordCount);
                 for (String word: wordCount.keySet()) {
@@ -43,6 +43,7 @@ public class Indexer {
                 }
             }
         }
+
         indexData.setWordToListOfURLs(wordToListOfURLsLocal);
         indexData.setUrlToWordCount(urlToWordCountLocal);
         indexData.setUrlToPlain(urlToPlainLocal);

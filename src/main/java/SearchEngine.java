@@ -22,8 +22,8 @@ public class SearchEngine {
     }
 
     private String cleanQuery(String query) {
-        query = query.toLowerCase();
         query = StringCleaner.cleanUpText(query);
+        query = query.toLowerCase();
         return query;
     }
 
@@ -59,6 +59,8 @@ public class SearchEngine {
             }
         }
         for (String website : websites) {
+            //System.out.println(indexData.getUrlToPlain().get(website));
+            //System.out.println(query);
             if (indexData.getUrlToPlain().get(website).contains(query)) {
                 result.put(website,
                         new SearchResult(website,

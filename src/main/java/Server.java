@@ -15,7 +15,7 @@ public class Server {
         // You should leave these two lines at the very beginning of main().
         Indexer.index();
         SearchEngine sE = new SearchEngine();
-        String res1 = sE.search("security clearance");
+        String res1 = sE.search("Up-to-date official transcript submitted as an electronic PDF");
         System.out.println(res1);
         Gson g = new Gson();
         // Get the person's name from the query string if available.

@@ -2,22 +2,20 @@ import java.util.*;
 
 public class Indexer {
 
-    private static final String[] PUNCTUATION = new String[]{"\\.", "\\,", "\\:", "\\;", "\\!", "\\?", "\\[", "\\]", "\"", "\\'", "\\{", "\\}"};
-
-    private static HashMap<String, HashSet<String>> wordToListOfURLs = new HashMap<>();
-    private static HashMap<String, HashMap<String,Integer>> urlToWordCount = new HashMap<>();
+    public static IndexData indexData = new IndexData();
+    public static boolean isReady = false;
 
     public static void main(String[] args)
     {
         index();
-        //System.out.println(wordToListOfURLs);
-        System.out.println(wordToListOfURLs.keySet().size());
-        for (String s : wordToListOfURLs.keySet()){
+    }
 
-            System.out.println("Key: " + s);
-            System.out.println("Value: " + wordToListOfURLs.get(s));
-        }
-        //System.out.println(urlToWordCount);
+    public static boolean isReady() {
+        return isReady;
+    }
+
+    public static IndexData getIndexData() {
+        return indexData;
     }
 
 
@@ -43,14 +41,15 @@ public class Indexer {
                 }
             }
         }
-        wordToListOfURLs = wordToListOfURLsLocal;
-        urlToWordCount = urlToWordCountLocal;
+        indexData.setWordToListOfURLs(wordToListOfURLsLocal);
+        indexData.setUrlToWordCount(urlToWordCountLocal);
+        isReady = true;
     }
 
     private static HashMap<String, Integer> parseWords(String words) {
         HashMap<String, Integer> map = new HashMap<>();
         //System.out.println("This is words before:" + words);
-        words = cleanUpText(words);
+        words = StringCleaner.cleanUpText(words);
 
         String[] w = words.split(" ");
         //System.out.println("This is words after:" + words);
@@ -69,13 +68,27 @@ public class Indexer {
         return map;
     }
 
-    private static String cleanUpText(String words) {
-        //System.out.println("Start");
-        for (String c : PUNCTUATION) {
-            //System.out.println("1: " + words);
-            words = words.replaceAll(c, " ");
-            //System.out.println("2: " + words);
+
+
+
+    public static class IndexData {
+        private  HashMap<String, HashSet<String>> wordToListOfURLs = new HashMap<>();
+        private  HashMap<String, HashMap<String,Integer>> urlToWordCount = new HashMap<>();
+
+        public  HashMap<String, HashMap<String, Integer>> getUrlToWordCount() {
+            return urlToWordCount;
         }
-        return words;
+
+        public  HashMap<String, HashSet<String>> getWordToListOfURLs() {
+            return wordToListOfURLs;
+        }
+
+        public  void setWordToListOfURLs(HashMap<String, HashSet<String>> wordToListOfURLs) {
+            this.wordToListOfURLs = wordToListOfURLs;
+        }
+
+        public  void setUrlToWordCount(HashMap<String, HashMap<String, Integer>> urlToWordCount) {
+            this.urlToWordCount = urlToWordCount;
+        }
     }
 }

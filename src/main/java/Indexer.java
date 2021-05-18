@@ -1,9 +1,12 @@
+import Utils.FileParser;
+import Utils.StringCleaner;
+
 import java.util.*;
 
 public class Indexer {
 
     public static IndexData indexData = new IndexData();
-    public static boolean isReady = false;
+    private static boolean isReady = false;
 
     public static void main(String[] args)
     {
@@ -20,6 +23,7 @@ public class Indexer {
 
 
     public static void index() {
+        isReady = false;
         HashMap<String, HashSet<String>> wordToListOfURLsLocal = new HashMap<>();
         HashMap<String, HashMap<String,Integer>> urlToWordCountLocal = new HashMap<>();
         HashMap<String, String> urlToPlainLocal = new HashMap<>();
@@ -52,12 +56,9 @@ public class Indexer {
 
     private static HashMap<String, Integer> parseWords(String words) {
         HashMap<String, Integer> map = new HashMap<>();
-        //System.out.println("This is words before:" + words);
         words = StringCleaner.cleanUpText(words);
 
         String[] w = words.split(" ");
-        //System.out.println("This is words after:" + words);
-        //System.out.println(Arrays.toString(w));
         for (String word : w) {
             String lowerW = word.toLowerCase();
             if (word.equals("")) {

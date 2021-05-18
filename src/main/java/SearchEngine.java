@@ -1,17 +1,19 @@
+import Utils.StringCleaner;
+
 import java.util.*;
 
 public class SearchEngine {
 
     public static final Integer SCALE_CONST = 99999;
 
-    public String search (String query) {
+    public ArrayList<SearchResult> search (String query) {
         if (!Indexer.isReady()) {
             return null;
         }
         String[] words = getWords(query);
         ArrayList<SearchResult> searchResults = scoreResults(words, cleanQuery(query));
         Collections.sort(searchResults);
-        return generateString(searchResults);
+        return searchResults;
 
     }
 
@@ -58,10 +60,11 @@ public class SearchEngine {
                 wordMissingForWebsite = false;
             }
         }
+
         for (String website : websites) {
-            //System.out.println(indexData.getUrlToPlain().get(website));
-            //System.out.println(query);
-            if (indexData.getUrlToPlain().get(website).contains(query)) {
+            // the reason we need the spaces is because say the word you are looking for is friend. If you
+            // don't have spaces this will match friends which will result in the null pointer when we do result.get()
+            if (indexData.getUrlToPlain().get(website).contains(" " + query + " ") ) {
                 result.put(website,
                         new SearchResult(website,
                                 result.get(website).score + SCALE_CONST));
@@ -80,7 +83,7 @@ public class SearchEngine {
     }
 
 
-    private class SearchResult implements Comparable<SearchResult>{
+    public class SearchResult implements Comparable<SearchResult>{
         private String link;
         private int score;
 

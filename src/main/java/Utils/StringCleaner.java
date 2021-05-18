@@ -1,3 +1,5 @@
+package Utils;
+
 public class StringCleaner {
 
     private static final String[] PUNCTUATION = new String[]{"\\.", "\\,", "\\:", "\\;", "\\!", "\\?", "\\[", "\\]", "\"", "\\'", "\\{", "\\}"};

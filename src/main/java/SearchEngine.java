@@ -62,9 +62,9 @@ public class SearchEngine {
         }
 
         for (String website : websites) {
-            // the reason we need the spaces is because say the word you are looking for is friend. If you
-            // don't have spaces this will match friends which will result in the null pointer when we do result.get()
-            if (indexData.getUrlToPlain().get(website).contains(" " + query + " ") ) {
+            // the reason we need result.containsKey(website) is because say the word you are looking for is friend.
+            // Than friends will match, which  is not quite what we are looking for.
+            if (indexData.getUrlToPlain().get(website).contains(query) && result.containsKey(website)) {
                 result.put(website,
                         new SearchResult(website,
                                 result.get(website).score + SCALE_CONST));

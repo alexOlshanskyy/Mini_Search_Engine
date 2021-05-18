@@ -9,7 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Server {
-    private static final Integer REINDEX_TIMER = 30000;
+    private static final Integer REINDEX_TIMER = 1200000;
 
 
     public static void main(String[] args) {

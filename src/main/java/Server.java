@@ -9,7 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Server {
-    private static final Integer REINDEX_TIMER = 1200000;
+    private static final Integer REINDEX_TIMER = 30000;
 
 
     public static void main(String[] args) {
@@ -32,16 +32,9 @@ public class Server {
         Spark.get("/search/:query", (req, res) -> {
             System.out.println("Got request: " + req.params(":query"));
             res.type("text/html");
-            if (Indexer.isReady()) {
-                ArrayList<SearchEngine.SearchResult> result = sE.search(req.params(":query"));
-                res.status(200);
-                return g.toJson(result);
-            } else {
-                res.status(200);
-                return g.toJson(null);
-            }
-
-
+            ArrayList<SearchEngine.SearchResult> result = sE.search(req.params(":query"));
+            res.status(200);
+            return g.toJson(result);
         });
 
     }

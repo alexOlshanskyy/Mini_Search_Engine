@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Indexer {
 
-    public static IndexData indexData = new IndexData();
+    public static IndexData indexData = new IndexData(null, null, null);
     private static boolean isReady = false;
 
     public static void main(String[] args)
@@ -23,7 +23,7 @@ public class Indexer {
 
 
     public static void index() {
-        isReady = false;
+
         HashMap<String, HashSet<String>> wordToListOfURLsLocal = new HashMap<>();
         HashMap<String, HashMap<String,Integer>> urlToWordCountLocal = new HashMap<>();
         HashMap<String, String> urlToPlainLocal = new HashMap<>();
@@ -48,9 +48,16 @@ public class Indexer {
             }
         }
 
-        indexData.setWordToListOfURLs(wordToListOfURLsLocal);
-        indexData.setUrlToWordCount(urlToWordCountLocal);
-        indexData.setUrlToPlain(urlToPlainLocal);
+        // acts like a lock
+        // even if search engine see that it is true, and it turns false straight away it is fine
+        // because we are sleeping for 1 second which is enough for any search to finish and no new search will start
+        isReady = false;
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        indexData = new IndexData(wordToListOfURLsLocal, urlToWordCountLocal, urlToPlainLocal);
         isReady = true;
     }
 
@@ -80,6 +87,12 @@ public class Indexer {
         private  HashMap<String, HashSet<String>> wordToListOfURLs = new HashMap<>();
         private  HashMap<String, HashMap<String,Integer>> urlToWordCount = new HashMap<>();
         private  HashMap<String, String> urlToPlain = new HashMap<>();
+
+        public IndexData(HashMap<String, HashSet<String>> wordToListOfURLs, HashMap<String, HashMap<String, Integer>> urlToWordCount, HashMap<String, String> urlToPlain) {
+            this.wordToListOfURLs = wordToListOfURLs;
+            this.urlToWordCount = urlToWordCount;
+            this.urlToPlain = urlToPlain;
+        }
 
         public void setUrlToPlain(HashMap<String, String> urlToPlain) {
             this.urlToPlain = urlToPlain;

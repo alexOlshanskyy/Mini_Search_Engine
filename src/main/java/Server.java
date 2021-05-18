@@ -26,10 +26,7 @@ public class Server {
             }
         }, 0, REINDEX_TIMER);
 
-        //Indexer.index();
         SearchEngine sE = new SearchEngine();
-        //String res1 = sE.search("Up-to-dAte oFficiAl transcript submitted as an electronic PDF");
-        //System.out.println(res1);
         Gson g = new Gson();
         // Get the person's name from the query string if available.
         Spark.get("/search/:query", (req, res) -> {

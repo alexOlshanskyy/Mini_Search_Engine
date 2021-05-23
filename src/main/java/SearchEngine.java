@@ -37,6 +37,9 @@ public class SearchEngine {
         boolean wordMissingForWebsite = false;
         for (String website : websites) {
             for (String word : words) {
+                if (word.equals("")) {
+                    continue;  // skip empty spaces
+                }
                 if (indexData.getWordToListOfURLs().containsKey(word)) {
                     if (indexData.getWordToListOfURLs().get(word).contains(website)) {
                         if (!result.containsKey(website)) {

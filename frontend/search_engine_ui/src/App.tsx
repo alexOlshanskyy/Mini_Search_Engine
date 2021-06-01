@@ -1,6 +1,6 @@
 
 import React, {ChangeEvent, Component, FormEvent} from 'react';
-
+import "./App.css";
 
 interface AppState {
     query : string
@@ -36,15 +36,21 @@ class App extends Component<{}, AppState> {
 
   render() {
     return (
-        <div>
-          <p><b>My search engine</b></p>
+        <div className="main">
+            <div className="App2">
+            <img src={"SearchEngineLogo.png"} height={100}/>
+            </div>
+            <div className="App1">
+
             <input
+                className="input"
                 onKeyPress={this.onKey}
                 placeholder="Search the Web"
                 onChange={this.updateSearch}
                 value={this.state.query}
             />
-          <button onClick={this.search.bind(this)}>GO</button>
+            <button className={"go"} onClick={this.search.bind(this)} >GO</button>
+            </div>
         </div>
     );
   }

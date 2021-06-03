@@ -3,14 +3,15 @@ import React, {ChangeEvent, Component, FormEvent} from 'react';
 import "./App.css";
 
 interface AppState {
-    query : string
+    query : string,
+    results: any[]
 
 }
 class App extends Component<{}, AppState> {
 
   constructor(props: any) {
     super(props);
-    this.state = {query : ""};
+    this.state = {query : "", results : []};
   }
 
     updateSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,6 +32,11 @@ class App extends Component<{}, AppState> {
             return;
         }
         let response = await res.json();
+        let r :any[] = response;
+        console.log(r)
+         this.setState({
+             results: r
+         })
         console.log(response);
     }
 
@@ -51,6 +57,9 @@ class App extends Component<{}, AppState> {
             />
             <button className={"go"} onClick={this.search.bind(this)} >GO</button>
             </div>
+            {this.state.results.map(({link,score}, index) => (
+                <p>{link}</p>
+            ))}
         </div>
     );
   }

@@ -4,7 +4,7 @@ import "./App.css";
 
 interface AppState {
     query : string,
-    results: any[]
+    results: any[] | null
 
 }
 class App extends Component<{}, AppState> {
@@ -57,7 +57,7 @@ class App extends Component<{}, AppState> {
             />
             <button className={"go"} onClick={this.search.bind(this)} >GO</button>
             </div>
-            {this.state.results.map(({link,score}, index) => (
+            {this.state.results && this.state.results.map(({link,score}, index) => (
                 <p>{link}</p>
             ))}
         </div>

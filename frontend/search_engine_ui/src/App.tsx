@@ -21,13 +21,13 @@ class App extends Component<{}, AppState> {
     onKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
             this.search().then().catch(e => {alert("Server not up!");
-                this.setState({ query: ""});});
+                this.setState({ query: "", results: []});});
         }
     }
 
     searchWrapper = () => {
         this.search().then().catch(e => {alert("Server not up!");
-            this.setState({ query: ""});});
+            this.setState({ query: "", results: []});});
     }
 
     async search() {
@@ -35,13 +35,15 @@ class App extends Component<{}, AppState> {
             return;
         }
         let res = await fetch("http://localhost:4567/search/" + this.state.query);
-        this.setState({ query: ""});
         if (!res.ok) {
             alert("Unable to find path");
             return;
         }
         let response = await res.json();
         let r :any[] = response;
+        if (r.length === 0) {
+            alert("Nothing Found!")
+        }
          this.setState({
              results: r
          })

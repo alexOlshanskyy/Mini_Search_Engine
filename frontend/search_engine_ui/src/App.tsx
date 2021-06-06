@@ -1,5 +1,5 @@
 
-import React, {ChangeEvent, Component, FormEvent} from 'react';
+import React, {ChangeEvent, Component} from 'react';
 import "./App.css";
 
 interface AppState {
@@ -20,33 +20,40 @@ class App extends Component<{}, AppState> {
 
     onKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
-            this.search().then();
+            this.search().then().catch(e => {alert("Server not up!");
+                this.setState({ query: ""});});
         }
     }
 
+    searchWrapper = () => {
+        this.search().then().catch(e => {alert("Server not up!");
+            this.setState({ query: ""});});
+    }
+
     async search() {
-        this.setState({ query: ""});
+        if (this.state.query === "") {
+            return;
+        }
         let res = await fetch("http://localhost:4567/search/" + this.state.query);
+        this.setState({ query: ""});
         if (!res.ok) {
             alert("Unable to find path");
             return;
         }
         let response = await res.json();
         let r :any[] = response;
-        console.log(r)
          this.setState({
              results: r
          })
-        console.log(response);
     }
 
   render() {
     return (
-        <div className="main">
-            <div className="App2">
-            <img src={"SearchEngineLogo.png"} height={100}/>
+        <div>
+            <div className="logo">
+            <img alt={''} src={"SearchEngineLogo.png"} height={100}/>
             </div>
-            <div className="App1">
+            <div className="search">
 
             <input
                 className="input"
@@ -55,10 +62,16 @@ class App extends Component<{}, AppState> {
                 onChange={this.updateSearch}
                 value={this.state.query}
             />
-            <button className={"go"} onClick={this.search.bind(this)} >GO</button>
+            <button className={"go"} onClick={this.searchWrapper} >GO</button>
             </div>
             {this.state.results && this.state.results.map(({link,score}, index) => (
-                <p>{link}</p>
+                <div className="search_results">
+                    <br></br>
+                    <a href={link}>{link}</a>
+                    <br></br>
+                </div>
+
+
             ))}
         </div>
     );

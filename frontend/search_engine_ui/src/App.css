@@ -1,33 +1,24 @@
-
-
-.main {
-}
-.App1 {
-  position: relative;
-  top: 10px;
-  margin-left: 10px;
-
-
-
-}
-.App2 {
+.search {
   position: relative;
   top: 10px;
   margin-left: 10px;
 }
-
-
-.input
-{
+.logo {
+  position: relative;
+  top: 10px;
+  margin-left: 10px;
+}
+.input {
   padding: 5px;
   font-size: 21px;
 }
-.go
-{
+.go {
   padding: 5px;
   font-size: 21px;
   width: 60px;
 }
-
+.search_results {
+  margin-left: 10px;
+}
 
 

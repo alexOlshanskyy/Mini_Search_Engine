@@ -9,7 +9,7 @@ public class FileParser {
 
     public static void main(String[] args)
     {
-        getDomains();
+        formatRawData();
     }
 
     private static void formatRawData() {

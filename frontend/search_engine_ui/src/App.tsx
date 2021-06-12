@@ -77,8 +77,6 @@ class App extends Component<{}, AppState> {
                     <a href={link} target="_blank" rel="noreferrer">{link}</a>
                     <br>{}</br>
                 </div>
-
-
             ))}
         </div>
     );

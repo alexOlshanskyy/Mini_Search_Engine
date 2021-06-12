@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -58,8 +57,10 @@ public class WebCrawler {
         } catch (IOException e) {
             // could happen if the url is outdated
             // ignore
+        } catch (NullPointerException e) {
+            // always return
+            return result;
         }
-        // always return
         return result;
     }
 

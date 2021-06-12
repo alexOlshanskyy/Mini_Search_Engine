@@ -4,8 +4,13 @@ import java.util.*;
 
 public class SearchEngine {
 
-    public static final Integer SCALE_CONST = 99999;
+    public static final Integer SCALE_CONST = 100;
 
+    /**
+     *
+     * @param query is a string that will be used to search
+     * @return Returns a list of SearchResults or null if Indexer is not ready or if something goes wrong
+     */
     public ArrayList<SearchResult> search (String query) {
         if (!Indexer.isReady()) {
             return null;
@@ -17,19 +22,34 @@ public class SearchEngine {
 
     }
 
+    /**
+     *
+     * @param query is the search request from the user
+     * @return Returns an array of words from the query
+     */
     private String[] getWords(String query) {
         query = query.toLowerCase();
         query = StringCleaner.cleanUpText(query);
         return query.split(" ");
     }
 
+    /**
+     *
+     * @param query is the search request from the user
+     * @return Returns a cleaned up string based on StringCleaner object. Also turns everything to lowercase.
+     */
     private String cleanQuery(String query) {
         query = StringCleaner.cleanUpText(query);
         query = query.toLowerCase();
         return query;
     }
 
-
+    /**
+     * This score functions scores the url search results by ranking them on how relevant they are to the search query
+     * @param words all the words from the query
+     * @param query users request query
+     * @return Returns a list of SearchResults
+     */
     private ArrayList<SearchResult> scoreResults (String[] words, String query) {
         Indexer.IndexData indexData = Indexer.getIndexData();
         HashMap<String, SearchResult> result = new HashMap<>();
@@ -76,19 +96,14 @@ public class SearchEngine {
         return new ArrayList<>(result.values());
     }
 
-    private String generateString(ArrayList<SearchResult> searchResults) {
-        StringBuilder sb = new StringBuilder();
-        for (SearchResult sr : searchResults) {
-            sb.append(sr.toString());
-            sb.append("\n");
-        }
-        return sb.toString();
-    }
 
-
-    public class SearchResult implements Comparable<SearchResult>{
-        private String link;
-        private int score;
+    public static class  SearchResult implements Comparable<SearchResult>{
+        /*
+            This object contains the data for a search result. In includes teh link (url) and the score
+            (how relevant this result is)
+         */
+        private final String link;
+        private final int score;
 
         @Override
         public String toString() {
@@ -100,14 +115,6 @@ public class SearchEngine {
         public SearchResult(String link, int score) {
             this.link = link;
             this.score = score;
-        }
-
-        public String getLink() {
-            return link;
-        }
-
-        public int getScore() {
-            return score;
         }
 
         @Override

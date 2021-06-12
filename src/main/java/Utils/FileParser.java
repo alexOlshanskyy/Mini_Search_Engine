@@ -12,6 +12,10 @@ public class FileParser {
         formatRawData();
     }
 
+
+    /**
+     * Util that is used to format the raw data from the raw file
+     */
     private static void formatRawData() {
         try {
             File file = new File("rawData.txt");
@@ -20,7 +24,7 @@ public class FileParser {
             StringBuilder sb = new StringBuilder();
             while ((str = br.readLine()) != null){
                 System.out.println(str.split(",")[0]);
-                sb.append(str.split(",")[0] +"\n");
+                sb.append(str.split(",")[0]).append("\n");
             }
             File fileOut = new File("domains.txt");
             Charset charset = StandardCharsets.US_ASCII;
@@ -32,6 +36,10 @@ public class FileParser {
         }
     }
 
+    /**
+     * Gets all the domains from domains.txt
+     * @return Returns a list of domains
+     */
     public static ArrayList<String> getDomains() {
         ArrayList<String> res = new ArrayList<>();
         try {

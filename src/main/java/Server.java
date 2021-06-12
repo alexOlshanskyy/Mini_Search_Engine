@@ -11,7 +11,11 @@ import java.util.TimerTask;
 public class Server {
     private static final Integer REINDEX_TIMER = 300000;
 
-
+    /**
+     * This is a simple server that has one endpoint /search.
+     * This server will Reindex all the data every REINDEX_TIMER.
+     * @param args not used
+     */
     public static void main(String[] args) {
         CORSFilter corsFilter = new CORSFilter();
         corsFilter.apply();
@@ -19,7 +23,6 @@ public class Server {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                // Your database code here
                 System.out.println("Reindexing");
                 Thread t = new Thread(new HelperThread());
                 t.start();

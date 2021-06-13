@@ -50,7 +50,8 @@ The server has just one path that accepts search queries. It calls the search en
 The server is also responsible for **reindexing**. Every x amount of time the server calls the indexer in the **separate thread** to reindex the URLs. While this is happening, the server can still accept client requests, and return search results based on the old indexing data. At the end of reindexing when the data is ready, we need to assign in to IndexData, and to avoid concurrency issues, IndexData is temporarily unavailable, so client requests will not get results. However, if the client requests again everything will work as normal. 
 
 ### Client:
-The client is written using React. It requests date from the server and waits for the response. Once it gets the response, it parses the Json data and displays URLs to the client like so:
+The client is written using React. It requests date from the server and waits for the response. Once it gets the response, it parses the Json data and displays URLs to the client. Here are a few examples:
+![](images/search_1.PNG)
 ![](images/search_2.PNG)
 If something goes wrong with the request, or the server, client is notified trough alert messages. 
 

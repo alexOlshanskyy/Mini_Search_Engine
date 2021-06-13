@@ -51,7 +51,7 @@ The server is also responsible for **reindexing**. Every x amount of time the se
 
 ### Client:
 The client is written using React. It requests date from the server and waits for the response. Once it gets the response, it parses the Json data and displays URLs to the client like so:
-
+![](images/search_1.PNG)
 If something goes wrong with the request, or the server, client is notified trough alert messages. 
 
 ### How to Run:

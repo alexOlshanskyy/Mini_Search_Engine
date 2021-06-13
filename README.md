@@ -63,4 +63,4 @@ To run the backend run Server.java from IDE (Requires Java Development Kit (JDK)
 In order to change what URLs to index, change domains.txt file. The format is one URL per line (no spaces, no empty lines. (Note: indexing will break if the certificate chain of the URL cannot be verified). 
 
 In order to change the time interval for reindexing change REINDEX_TIMER in Server.java (The value is in milliseconds). 
-To run the frontend run “npm run start” in command line from “~Mini_Search_Engine\frontend\search_engine_ui” directory. The fronted could be used in any browser at localhost:3000.
+To run the frontend run **“npm run start”** in command line from “~Mini_Search_Engine\frontend\search_engine_ui” directory. The fronted could be used in any browser at localhost:3000.
